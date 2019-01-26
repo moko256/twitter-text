@@ -4,24 +4,16 @@
 
 package com.twitter.twittertext;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.util.ArrayList;
-import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * A class that represents the different configurations used by {@link TwitterTextParser}
  * to parse a tweet.
  */
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class TwitterTextConfiguration {
 
   // These defaults should be kept up to date with v2.json config.
@@ -70,31 +62,39 @@ public class TwitterTextConfiguration {
   @Nonnull
   public static TwitterTextConfiguration configurationFromJson(@Nonnull String json,
                                                                boolean isResource) {
-    // jackson's default serialization format is json
-    final ObjectMapper objectMapper = new ObjectMapper();
-    TwitterTextConfiguration config;
-    try {
-      if (isResource) {
-        InputStream resourceStream = TwitterTextConfiguration.class.getResourceAsStream("/" + json);
-        // For whatever reason, this fails in some Samsung Galaxy J7 family of devices,
-        // try falling back to classloader.
-        if (resourceStream == null) {
-          resourceStream =
-              TwitterTextConfiguration.class.getClassLoader().getResourceAsStream(json);
-        }
-        try {
-          final Reader reader = new BufferedReader(new InputStreamReader(resourceStream));
-          config = objectMapper.readValue(reader, TwitterTextConfiguration.class);
-          // If an invalid resource is passed, use default config.
-        } catch (NullPointerException ex) {
-          return getDefaultConfig();
-        }
-      } else {
-        config = objectMapper.readValue(json, TwitterTextConfiguration.class);
-      }
-    // InputStreamReader can throw an NPE when the resource is null
-    } catch (IOException ex) {
-      config = getDefaultConfig();
+    TwitterTextConfiguration config = new TwitterTextConfiguration();
+
+    switch (json) {
+      case "v1.json":
+        config.version = 1;
+        config.maxWeightedTweetLength = 140;
+        config.scale = 1;
+        config.defaultWeight = 1;
+        config.emojiParsingEnabled = false;
+        config.transformedURLLength = 23;
+        config.ranges = Collections.emptyList();
+        break;
+      case "v2.json":
+        config.version = 2;
+        config.maxWeightedTweetLength = 280;
+        config.scale = 100;
+        config.defaultWeight = 200;
+        config.emojiParsingEnabled = false;
+        config.transformedURLLength = 23;
+        config.ranges = DEFAULT_RANGES;
+        break;
+      case "v3.json":
+        config.version = 3;
+        config.maxWeightedTweetLength = 280;
+        config.scale = 100;
+        config.defaultWeight = 200;
+        config.emojiParsingEnabled = true;
+        config.transformedURLLength = 23;
+        config.ranges = DEFAULT_RANGES;
+        break;
+      default:
+        config = getDefaultConfig();
+        break;
     }
     return config;
   }
