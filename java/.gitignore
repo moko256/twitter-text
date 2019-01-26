@@ -6,3 +6,5 @@
 /Twitter-text-java.iml
 /twitter-text-java.ipr
 /twitter-text-java.iws
+/.gradle/
+/build/

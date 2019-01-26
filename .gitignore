@@ -1,5 +1,8 @@
-# Ignore Gradle project-specific cache directory
-.gradle
-
-# Ignore Gradle build output directory
-build
+# IntelliJ files
+js/.idea
+rb/.idea
+java/.idea
+/.idea
+twitter-text.iml
+.DS_Store
+*.sw?
