@@ -4,11 +4,7 @@
 
 package com.twitter.twittertext;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
+import java.io.*;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
@@ -568,8 +564,8 @@ public class ConformanceTest {
 
   @SuppressWarnings("unchecked")
   static List<Map> loadConformanceData(String yamlFile, String testType) throws IOException {
-    final String resourcePath = String.format("/%s", yamlFile);
-    final InputStream resourceStream = ConformanceTest.class.getResourceAsStream(resourcePath);
+    final String resourcePath = String.format("../conformance/%s", yamlFile);
+    final InputStream resourceStream = new FileInputStream(new File(resourcePath));
     final Reader resourceReader = new BufferedReader(new InputStreamReader(resourceStream));
     final Map fullConfig = new YAMLMapper().readValue(resourceReader, Map.class);
     final Map testConfig = (Map) fullConfig.get("tests");

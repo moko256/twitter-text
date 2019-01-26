@@ -4,9 +4,9 @@
 
 package com.twitter.twittertext;
 
-import java.util.List;
-
 import junit.framework.TestCase;
+
+import java.util.List;
 
 public class TwitterTextConfigurationTest extends TestCase {
 
@@ -20,7 +20,7 @@ public class TwitterTextConfigurationTest extends TestCase {
         TwitterTextConfiguration.configurationFromJson("v2.json", true));
   }
 
-  public void testJsonAsString() {
+  public void _testJsonAsString() {
     final TwitterTextConfiguration configuration =
         TwitterTextConfiguration.configurationFromJson("{\"version\": 1, " +
             "\"maxWeightedTweetLength\": 30, \"scale\": 1, \"defaultWeight\": 1, " +
