@@ -8,28 +8,13 @@ plugins {
 }
 
 repositories {
-    mavenLocal()
-    maven {
-        url = 'https://oss.sonatype.org/content/repositories/snapshots'
-    }
-
-    maven {
-        url = 'http://repo.maven.apache.org/maven2'
-    }
+    mavenCentral()
 }
 
 dependencies {
-    compile 'com.google.code.findbugs:jsr305:2.0.1'
+    compile 'com.google.code.findbugs:jsr305:3.0.2'
     testCompile 'junit:junit:4.12'
     testCompile 'com.fasterxml.jackson.core:jackson-databind:2.8.7'
     testCompile 'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.9.1'
 }
 
-group = 'com.twitter.twittertext'
-version = '3.0.1'
-description = 'Twitter Text Java library'
-sourceCompatibility = '1.7'
-
-tasks.withType(JavaCompile) {
-    options.encoding = 'UTF-8'
-}
