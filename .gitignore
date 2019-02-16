@@ -3,6 +3,6 @@ js/.idea
 rb/.idea
 java/.idea
 /.idea
-twitter-text.iml
+*.iml
 .DS_Store
 *.sw?
