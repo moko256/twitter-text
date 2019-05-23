@@ -1,7 +1,4 @@
-plugins {
-    id 'java-library'
-    id 'maven'
-}
+apply plugin: 'java-library'
 
 repositories {
     mavenCentral()
